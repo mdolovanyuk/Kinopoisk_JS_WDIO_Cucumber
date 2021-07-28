@@ -22,15 +22,20 @@ class TodayInCinema {
     }
 
     snippetsAreDisplayed() {
-        //browser.pause(10000);
-            this.carousel.scrollIntoView();
-            this.snippets.forEach(function(element, index){
-            console.log(index + " " + element.isDisplayedInViewport());
-            if(element.isDisplayedInViewport())
-
-        })
-      //  console.log("!!!!!!!" + this.snippets.isDisplayed());
-        return true;
+       // browser.pause(10000);
+        this.carousel.scrollIntoView();
+       // browser.pause(10000);
+        let snippetsOnView = [];
+        this.snippets.forEach(function(element, index){
+            console.log(index + " " + element.isDisplayedInViewport() + element.$('span span span').getText());
+            if(element.isDisplayedInViewport() == true)
+                snippetsOnView.push(element);
+       })
+            console.log(snippetsOnView.length);
+            if(snippetsOnView.length > 0)
+                return true;
+            else
+                return false;
     }
 }
 

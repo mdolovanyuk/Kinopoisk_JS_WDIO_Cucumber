@@ -4,6 +4,7 @@ const expect = require('chai').expect;
 
 Given(/^открыт сайт (.*)$/, function(url) {
      browser.url(url);
+     browser.maximizeWindow();
 })
 
 When ('навести курсор на название фильма', function() {
