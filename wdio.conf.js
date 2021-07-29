@@ -52,7 +52,8 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
+    capabilities: [
+        {
             maxInstances: 5,
             browserName: 'chrome',
             acceptInsecureCerts: true,
@@ -70,7 +71,7 @@ exports.config = {
             maxInstances: 5,
             browserName: 'firefox',
             acceptInsecureCerts: true
-        } */
+        }*/
     ],
     //
     // ===================
@@ -121,7 +122,7 @@ exports.config = {
     // commands. Instead, they hook themselves up into the test process.
     services: [
         ['chromedriver'],
-      //  ['geckodriver']
+        ['geckodriver']
     ],
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -134,7 +135,7 @@ exports.config = {
         require: [
             './step-definition/*.js'
         ],
-        timeout: 60000,
+        timeout: 30000,
         ignoreUndefinedDefinitions: true,
         tagExpression: '@try'
     },
