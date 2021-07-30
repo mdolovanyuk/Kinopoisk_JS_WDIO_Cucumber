@@ -1,10 +1,8 @@
 module.exports = {
-    regForTitle : /^[A-Za-zА-ЯЁа-яё0-9!@#\$%&\*\(\)\-\+=№;:\?\.\,]+(\s[A-Za-zА-Яа-я0-9!@#\$%&\*\(\)\-\+=№;:\?\.\,]+)*$/,
+    regForTitle : /^[A-Za-zА-ЯЁа-яё0-9!@#\$%&\*\(\)—\-\+=№;:\?\.\,]+(\s[A-Za-zА-Яа-я0-9!@#\$%&\*\(\)\-\+=№;:\?\.\,]+)*$/,
     regForGenre : /^[а-яё]+$/,
-    regForYear : /^\d\d\d\d$/
+    regForYear : /^\d{4}$/,
+    regForFilmRef : /^https:\/\/www\.kinopoisk\.ru\/film\/\d+\/$/,
+    regForRating : /^(\—|\d\.\d|\d{1,3}%)$/,
+    regForTicketRef : /^https:\/\/www\.kinopoisk\.ru\/afisha\/new\/film\/\d+\/$/,
 }
-
-
-//module.exports.regForTitle = regForTitle;
-//module.exports.regForTitle = regForGenre;
-//module.exports.regForTitle = regForYear;

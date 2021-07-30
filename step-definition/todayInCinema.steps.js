@@ -8,7 +8,15 @@ Given(/^открыт сайт (.*)$/, function(url) {
 })
 
 When ('навести курсор на название фильма', function() {
-    TodayInCinemaPage.testMeth();
+    TodayInCinemaPage.putMouseOnTitle();
+})
+
+When ('нажать в карусели стрелку вправо', function() {
+    TodayInCinemaPage.clickRightArrow();
+})
+
+When ('навести курсор на кнопку с билетами', function() {
+    TodayInCinemaPage.putMouseOnTicketButton();
 })
 
 Then ('отображаются карточки', function() {
@@ -38,6 +46,27 @@ Then ('есть корректная ссылка', function() {
 Then ('есть корректный рейтинг', function() {
     expect(TodayInCinemaPage.ratingsAreCorrect()).to.be.true;
 })
-Then ('название фильма в окошке соответствует названию, на которое наведен курсор', function() {
-    //TodayInCinemaPage.checkTitle();
+
+Then ('появляются новые карточки', function() {
+    expect(TodayInCinemaPage.newSnippetsAreShown()).to.be.true;
+})
+
+Then ('появляется стрелка прокрутки влево', function() {
+    expect(TodayInCinemaPage.leftArrowIsShown()).to.be.true;
+})
+
+Then ('слева снизу появляется всплывающее превью', function() {
+    expect(TodayInCinemaPage.previewIsShown()).to.be.true;
+})
+
+Then ('название фильма в превью соответствует названию, на которое наведен курсор', function() {
+    expect(TodayInCinemaPage.titlesAreEqual()).to.be.true;
+})
+
+Then ('появляется большая кнопка с надписью "Билеты"', function() {
+    expect(TodayInCinemaPage.bigTicketButtonIsShown()).to.be.true;
+})
+
+Then ('у кнопки есть корректная ссылка', function() {
+    expect(TodayInCinemaPage.ticketRefIsCorrect()).to.be.true;
 })
