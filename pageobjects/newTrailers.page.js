@@ -1,12 +1,12 @@
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
-const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/todayInCinema.com');
+const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
 class NewTrailersPage {
 
-    get carousel() {return $('.today-in-cinema__carousel')};
-    get snippets() {return $$('.today-in-cinema-carousel-item__snippet')};
-    get arrowRight() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_right')};
-    get arrowLeft() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_left')};
+    get carousel() {return $('.new-trailers__carousel')};
+    get snippets() {return $$('.new-trailers__item')};
+    get arrowRight() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_right')};
+    get arrowLeft() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_left')};
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
     get previewCardTitle() {return $('div[data-tid = "f0448ef1"]').$('.preview-card-film__title')};
 
@@ -22,23 +22,19 @@ class NewTrailersPage {
     }
 
     titlesAreCorrect() {
-        return checkCorrect('title', regForTitle, this.snippets);
+        return checkCorrect('titleNewTrailers', regForTitle, this.snippets);
     }
 
     genresAreCorrect() {
-        return checkCorrect('genre', regForGenre, this.snippets);
+        return checkCorrect('genreNewTrailers', regForGenre, this.snippets);
    }
 
     yearsAreCorrect() {
-        return checkCorrect('year', regForYear, this.snippets);
+        return checkCorrect('yearNewTrailers', regForYear, this.snippets);
     }
 
     refsAreCorrect() {
-        return checkCorrect('ref', regForFilmRef, this.snippets);
-    }
-
-    ratingsAreCorrect() {
-        return checkCorrect('rating', regForRating, this.snippets);
+        return checkCorrect('refNewTrailers', regForFilmRef, this.snippets);
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"

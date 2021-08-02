@@ -1,13 +1,13 @@
 checkDisplay = function (testItemType, elements) {
     let displayedItems = [];
     let testItem;
-    elements.forEach(function(element){
+    elements.forEach(function(element, index){
         testItem = getTestItem(testItemType, element);
-    //    console.log("!!!!!!! " + element.$('span span span').getText() + ' ' + testItem.isDisplayed());
+        console.log("!!!!!!! " + element + ' - [' + index + '] ' + testItem.isDisplayed());
         if (getTestItem(testItemType,element).isDisplayed() == true)
             displayedItems.push(element);
     })
-    //console.log("!!!!!!! " + testItemType + ' ' + displayedItems.length + ' ' + elements.length + '\n');
+    console.log("!!!!!!! " + testItemType + ' ' + displayedItems.length + ' ' + elements.length + '\n');
     if (displayedItems.length > 0)
         return true;
     else
@@ -45,6 +45,7 @@ getFullTitle = function (titleStrings) {
 getTestItem = function (testItemType, element) {
     let testItem;
     let genreAndYear;
+    let titleStrings;
     switch (testItemType) {
         case 'snippet':
             testItem = element;
@@ -53,7 +54,7 @@ getTestItem = function (testItemType, element) {
             testItem = element.$('img');
             break;
         case 'title':
-            let titleStrings = element.$('.today-in-cinema-carousel-item__snippet-title').$$('span span span');
+            titleStrings = element.$('.today-in-cinema-carousel-item__snippet-title').$$('span span span');
             testItem = getFullTitle(titleStrings);
             break;
         case 'genre':
@@ -70,6 +71,22 @@ getTestItem = function (testItemType, element) {
         case 'rating':
             testItem = element.$('.film-rating-bar-partial-component').getText();
             break;
+        case 'titleNewTrailers':
+            titleStrings = element.$('.w2NvtugQIJ3G0Xs7Su--H').$$('span span span');
+            testItem = getFullTitle(titleStrings);
+            break;
+        case 'genreNewTrailers':
+            genreAndYear = element.$('.lZg9KqrHYgMLpAePYTgnz').getText();
+            testItem = genreAndYear.slice(genreAndYear.indexOf(', ') + 2);
+            break;
+        case 'yearNewTrailers':
+            genreAndYear = element.$('.lZg9KqrHYgMLpAePYTgnz').getText();
+            testItem = genreAndYear.slice(0, genreAndYear.indexOf(', '));
+            break;
+        case 'refNewTrailers':
+            testItem = element.$(a).getProperty('href');
+            break;
+
     }
     return testItem;
 }

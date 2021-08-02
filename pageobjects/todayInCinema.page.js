@@ -1,5 +1,5 @@
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
-const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/todayInCinema.com');
+const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
 class TodayInCinemaPage {
 
@@ -54,7 +54,7 @@ class TodayInCinemaPage {
     //TODO - можно через индекс отображаемого элемента
         this.snippets.forEach(function(element){
             let tit = element.$('.today-in-cinema-carousel-item__snippet-title').$('span span span');
-            console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
+        //    console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
         })
         return true;
     }

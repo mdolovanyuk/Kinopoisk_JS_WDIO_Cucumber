@@ -1,12 +1,12 @@
-const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
-const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/todayInCinema.com');
+const {regForRedChoiceRef} = require('../regexp');
+const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
 class RedactionChoicePage {
 
-    get carousel() {return $('.today-in-cinema__carousel')};
-    get snippets() {return $$('.today-in-cinema-carousel-item__snippet')};
-    get arrowRight() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_right')};
-    get arrowLeft() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_left')};
+    get carousel() {return $('._26U9ddckRECoOhWRhmdv4k')};
+    get snippets() {return $$('.cinema-review-snippet')};
+    get arrowRight() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_right')};
+    get arrowLeft() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_left')};
 
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
@@ -19,24 +19,8 @@ class RedactionChoicePage {
         return checkDisplay('poster', this.snippets);
     }
 
-    titlesAreCorrect() {
-        return checkCorrect('title', regForTitle, this.snippets);
-    }
-
-    genresAreCorrect() {
-        return checkCorrect('genre', regForGenre, this.snippets);
-   }
-
-    yearsAreCorrect() {
-        return checkCorrect('year', regForYear, this.snippets);
-    }
-
     refsAreCorrect() {
-        return checkCorrect('ref', regForFilmRef, this.snippets);
-    }
-
-    ratingsAreCorrect() {
-        return checkCorrect('rating', regForRating, this.snippets);
+        return checkCorrect('ref', regForRedChoiceRef, this.snippets);
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"
@@ -49,8 +33,8 @@ class RedactionChoicePage {
 
     //TODO - можно через индекс отображаемого элемента
         this.snippets.forEach(function(element){
-            let tit = element.$('.today-in-cinema-carousel-item__snippet-title').$('span span span');
-            console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
+
+            console.log("!!!!!!! " + element + ' ' + element.$('img').isDisplayed());
         })
         return true;
     }
