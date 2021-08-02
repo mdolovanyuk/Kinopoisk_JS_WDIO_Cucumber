@@ -24,7 +24,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './tests/**/*.feature'
+        './tests/**/todayInCinema.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -80,7 +80,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'warn',
+    logLevel: 'trace',
     //
     // Set specific log levels per logger
     // loggers:
@@ -136,8 +136,9 @@ exports.config = {
             './step-definition/*.js'
         ],
         timeout: 30000,
-        ignoreUndefinedDefinitions: true,
-        tagExpression: '@try'
+        ignoreUndefinedDefinitions: true
+        //backtrace = true
+        //tagExpression: '@try'
     },
 
     //

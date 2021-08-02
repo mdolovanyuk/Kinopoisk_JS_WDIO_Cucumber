@@ -1,7 +1,7 @@
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
-const {getFullTitle} = require('../commands/todayInCinema.com');
+const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/todayInCinema.com');
 
-class TodayInCinema {
+class TodayInCinemaPage {
 
     get carousel() {return $('.today-in-cinema__carousel')};
     get snippets() {return $$('.today-in-cinema-carousel-item__snippet')};
@@ -16,110 +16,31 @@ class TodayInCinema {
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
 
     snippetsAreDisplayed() {
-        let displayedItems = [];
-        this.snippets.forEach(function(element){
-            if (element.isDisplayed() == true)
-                displayedItems.push(element);
-        })
-        if (displayedItems.length > 0)
-            return true;
-        else
-            return false;
+        return checkDisplay('snippet', this.snippets);
     }
 
     postersAreDisplayed() {
-        let displayedItems = [];
-        this.snippets.forEach(function(element){
-            if (element.$('img').isDisplayed() == true)
-                displayedItems.push(element);
-    //       /console.log(index + ' ' + element.$('span span span').getText() + ' ' + element.$('img').isDisplayed());
-        })
-        if (displayedItems.length > 0)
-            return true;
-        else
-            return false;
+        return checkDisplay('poster', this.snippets);
     }
 
     titlesAreCorrect() {
-        let correctItems = [];
-        this.snippets.forEach(function(element){
-            let titleStrings = element.$('.today-in-cinema-carousel-item__snippet-title').$$('span span span');
-            let fullTitle = getFullTitle(titleStrings);
-    //        console.log("!!!!!!! " +fullTitle + ' ' +regForTitle.test(fullTitle));
-            if (regForTitle.test(fullTitle) == true)
-                correctItems.push(element);
-        })
-    //    console.log(correctItems.length + ' ' + this.snippets.length);
-        if (correctItems.length == this.snippets.length)
-            return true;
-        else
-            return false;
+        return checkCorrect('title', regForTitle, this.snippets);
     }
 
     genresAreCorrect() {
-        let correctItems = [];
-    //    console.log(regForGenre);
-        this.snippets.forEach(function(element){
-            let genreAndYear = element.$('.film-poster-snippet-partial-component__caption').getText();
-            let genre = genreAndYear.slice(genreAndYear.indexOf(', ') + 2);
-    //        console.log(genre + ' ' + regForGenre.test(genre));
-            if (regForGenre.test(genre) == true)
-                correctItems.push(element);
-        })
-    //    console.log(correctItems.length + ' ' + this.snippets.length);
-        if (correctItems.length == this.snippets.length)
-            return true;
-        else
-            return false;
+        return checkCorrect('genre', regForGenre, this.snippets);
    }
 
     yearsAreCorrect() {
-        let correctItems = [];
-    //    console.log(regForYear);
-        this.snippets.forEach(function(element){
-            let genreAndYear = element.$('.film-poster-snippet-partial-component__caption').getText();
-            let year = genreAndYear.slice(0, genreAndYear.indexOf(', '));
-    //        console.log(year + ' ' + regForYear.test(year));
-            if (regForYear.test(year) == true)
-                correctItems.push(element);
-        })
-    //    console.log(correctItems.length + ' ' + this.snippets.length);
-        if (correctItems.length == this.snippets.length)
-            return true;
-        else
-            return false;
+        return checkCorrect('year', regForYear, this.snippets);
     }
 
     refsAreCorrect() {
-        let correctItems = [];
-    //    console.log(regForFilmRef);
-        this.snippets.forEach(function(element){
-            let ref = element.getProperty('href');
-    //        console.log(ref + ' ' + regForFilmRef.test(ref));
-            if (regForFilmRef.test(ref) == true)
-                correctItems.push(element);
-        })
-    //    console.log(correctItems.length + ' ' + this.snippets.length);
-        if (correctItems.length == this.snippets.length)
-            return true;
-        else
-            return false;
+        return checkCorrect('ref', regForFilmRef, this.snippets);
     }
 
     ratingsAreCorrect() {
-        let correctItems = [];
-    //    console.log(regForRating);
-        this.snippets.forEach(function(element){
-            let rating = element.$('.film-rating-bar-partial-component').getText();
-    //        console.log(rating + ' ' + regForRating.test(rating));
-            if (regForRating.test(rating) == true)
-                correctItems.push(element);
-        })
-    //    console.log(correctItems.length + ' ' + this.snippets.length);
-        if (correctItems.length == this.snippets.length)
-            return true;
-        else
-            return false;
+        return checkCorrect('rating', regForRating, this.snippets);
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"
@@ -194,13 +115,8 @@ class TodayInCinema {
     }
 
     ticketRefIsCorrect() {
-        let ref = this.bigTicketButton.getProperty('href');
-        console.log(ref + ' ' + regForTicketRef.test(ref));
-        if (regForTicketRef.test(ref) == true)
-            return true;
-        else
-            return false;
+        return checkCorrect('ref', regForTicketRef, [this.bigTicketButton]);
     }
 }
 
-module.exports = new TodayInCinema();
+module.exports = new TodayInCinemaPage();
