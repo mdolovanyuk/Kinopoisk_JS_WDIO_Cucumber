@@ -8,6 +8,9 @@ class RedactionChoicePage {
     get arrowRight() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_right')};
     get arrowLeft() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_left')};
 
+    showBlock() {
+        this.carousel.scrollIntoView(false);
+    }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
 
@@ -44,6 +47,7 @@ class RedactionChoicePage {
             this.arrowLeft.waitForDisplayed();
         }
         catch (e) {
+            console.log(e);
             return false;
         }
         return true;

@@ -57,5 +57,5 @@ Then ('у кнопки есть корректная ссылка', function() {
 })
 
 Then ('откроется виджет с плеером', function() {
-    expect(this.page.pleerIsShown()).to.be.true;
+    expect(this.page.playerIsShown()).to.be.true;
 })

@@ -58,6 +58,7 @@ getTestItem = function (testItemType, element) {
             testItem = getFullTitle(titleStrings);
             break;
         case 'genre':
+            //browser.pause(3000000);
             genreAndYear = element.$('.film-poster-snippet-partial-component__caption').getText();
             testItem = genreAndYear.slice(genreAndYear.indexOf(', ') + 2);
             break;
@@ -84,7 +85,7 @@ getTestItem = function (testItemType, element) {
             testItem = genreAndYear.slice(0, genreAndYear.indexOf(', '));
             break;
         case 'refNewTrailers':
-            testItem = element.$(a).getProperty('href');
+            testItem = element.$('a').getProperty('href');
             break;
 
     }

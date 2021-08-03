@@ -7,11 +7,15 @@ class TodayInCinemaPage {
     get snippets() {return $$('.today-in-cinema-carousel-item__snippet')};
     get arrowRight() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_right')};
     get arrowLeft() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_left')};
+    get firstTitle() { return $('.today-in-cinema-carousel-item__snippet').$('.today-in-cinema-carousel-item__snippet-title')};
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
-    get previewCardTitle() {return $('div[data-tid = "f0448ef1"]').$('.preview-card-film__title')};
+    get previewCardTitle() {return $('.preview-card-film__title')};
     get ticketButton() {return $('.nameplate__item_type_tickets')};
     get bigTicketButton() {return $('.nameplate__button_type_tickets')};
 
+    showBlock() {
+        this.carousel.scrollIntoView(false);
+    }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
 
@@ -64,6 +68,7 @@ class TodayInCinemaPage {
             this.arrowLeft.waitForDisplayed();
         }
         catch (e) {
+            console.log(e);
             return false;
         }
         return true;
@@ -72,10 +77,8 @@ class TodayInCinemaPage {
     //МЕТОДЫ СЦЕНАРИЯ "ПОЯВЛЕНИЕ ВСПЛЫВАЮЩЕГО ПРЕВЬЮ"
 
     putMouseOnTitle() {
-    //TODO - индекс первого видимого сниппета (вместо 5)
-        this.snippets[5].scrollIntoView();
-        this.snippets[5].moveTo();
-        browser.pause(3000);
+        this.firstTitle.scrollIntoView(false);
+        this.firstTitle.moveTo();
     }
 
     previewIsShown() {
@@ -83,14 +86,14 @@ class TodayInCinemaPage {
             this.previewCard.waitForDisplayed();
         }
         catch (e) {
+            console.log(e);
             return false;
         }
         return true;
     }
 
     titlesAreEqual() {
-    //TODO - индекс певого видимого сниппета (вместо 5)
-        let fullTitle = getFullTitle(this.snippets[5].$('.today-in-cinema-carousel-item__snippet-title').$$('span span span'));
+        let fullTitle = getFullTitle(this.firstTitle.$$('span span span'));
     //    console.log('!!!!!! ' + this.previewCardTitle.getText() + ' = ' + fullTitle);
         if (this.previewCardTitle.getText().includes(fullTitle) == true)
             return true;

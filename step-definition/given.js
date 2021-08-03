@@ -22,4 +22,5 @@ Given(/^открыт блок "(.*)"$/, function(unit) {
             this.page = NewTrailersPage;
             break;
     }
+    this.page.showBlock();
 })

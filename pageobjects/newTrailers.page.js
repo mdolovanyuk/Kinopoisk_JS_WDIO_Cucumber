@@ -4,12 +4,18 @@ const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands
 class NewTrailersPage {
 
     get carousel() {return $('.new-trailers__carousel')};
-    get snippets() {return $$('.new-trailers__item')};
+    get snippets() {return $$('[data-tid = "f3f9a9b3"]')};
     get arrowRight() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_right')};
     get arrowLeft() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_left')};
+    get firstTitle() { return $('[data-tid = "f3f9a9b3"]').$('a')};
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
-    get previewCardTitle() {return $('div[data-tid = "f0448ef1"]').$('.preview-card-film__title')};
+    get previewCardTitle() {return $('.preview-card-film__title')};
+    get playButton() { return $('._35qy5akYsP3U1o_dxlSjm7')};
+    get player() { return $('iframe.discovery-trailers-iframe')};
 
+    showBlock() {
+        this.carousel.scrollIntoView(false);
+    }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
 
@@ -47,7 +53,7 @@ class NewTrailersPage {
 
     //TODO - можно через индекс отображаемого элемента
         this.snippets.forEach(function(element){
-            let tit = element.$('.today-in-cinema-carousel-item__snippet-title').$('span span span');
+            let tit = element.$('.w2NvtugQIJ3G0Xs7Su--H').$('span span span');
             console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
         })
         return true;
@@ -58,6 +64,7 @@ class NewTrailersPage {
             this.arrowLeft.waitForDisplayed();
         }
         catch (e) {
+            console.log(e);
             return false;
         }
         return true;
@@ -66,10 +73,9 @@ class NewTrailersPage {
     //МЕТОДЫ СЦЕНАРИЯ "ПОЯВЛЕНИЕ ВСПЛЫВАЮЩЕГО ПРЕВЬЮ"
 
     putMouseOnTitle() {
-    //TODO - индекс первого видимого сниппета (вместо 5)
-        this.snippets[5].scrollIntoView();
-        this.snippets[5].moveTo();
-        browser.pause(3000);
+    //TODO - индекс первого видимого сниппета (вместо 0)
+        this.firstTitle.scrollIntoView(false);
+        this.firstTitle.moveTo();
     }
 
     previewIsShown() {
@@ -77,6 +83,7 @@ class NewTrailersPage {
             this.previewCard.waitForDisplayed();
         }
         catch (e) {
+            console.log(e);
             return false;
         }
         return true;
@@ -84,7 +91,7 @@ class NewTrailersPage {
 
     titlesAreEqual() {
     //TODO - индекс певого видимого сниппета (вместо 5)
-        let fullTitle = getFullTitle(this.snippets[5].$('.today-in-cinema-carousel-item__snippet-title').$$('span span span'));
+        let fullTitle = getFullTitle(this.firstTitle.$$('span span span'));
     //    console.log('!!!!!! ' + this.previewCardTitle.getText() + ' = ' + fullTitle);
         if (this.previewCardTitle.getText().includes(fullTitle) == true)
             return true;
@@ -95,17 +102,19 @@ class NewTrailersPage {
     //МЕТОДЫ СЦЕНАРИЯ "РАБОТА КНОПКИ ЗАПУСКА ВИДЕО"
 
     clickPlayButton() {
-    //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
-        this.ticketButton.scrollIntoView(false);
-        this.ticketButton.moveTo();
-    //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
+        this.playButton.click();
     }
 
-    pleerIsShown() {
-        if (this.bigTicketButton.isDisplayed() == true)
-            return true;
-        else
+    playerIsShown() {
+        //console.log(this.player + ' ' + this.player.isDisplayed());
+        try {
+            this.player.waitForDisplayed();
+        }
+        catch (e) {
+            console.log(e);
             return false;
+        }
+        return true;
     }
 }
 
