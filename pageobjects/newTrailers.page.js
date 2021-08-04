@@ -1,6 +1,8 @@
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
 const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
+var snippetsCount = 0;
+
 class NewTrailersPage {
 
     get carousel() {return $('.new-trailers__carousel')};
@@ -11,7 +13,8 @@ class NewTrailersPage {
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
     get previewCardTitle() {return $('.preview-card-film__title')};
     get playButton() { return $('._35qy5akYsP3U1o_dxlSjm7')};
-    get player() { return $('iframe.discovery-trailers-iframe')};
+   // get player() { return $('iframe.discovery-trailers-iframe')};
+    get player() { return $('iframe[data-tid = "bc52a00f"]')};
 
     showBlock() {
         this.carousel.scrollIntoView(false);
@@ -46,17 +49,25 @@ class NewTrailersPage {
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"
 
     clickRightArrow() {
+        this.snippets.forEach(function(element){
+            if (element.isDisplayed() == true)
+            snippetsCount++;
+        })
+        console.log('!!!!!! snippetsCount = ' + snippetsCount);
         this.arrowRight.click();
     }
 
     newSnippetsAreShown() {
-
-    //TODO - можно через индекс отображаемого элемента
+        var newSnippetsCount = 0;
         this.snippets.forEach(function(element){
-            let tit = element.$('.w2NvtugQIJ3G0Xs7Su--H').$('span span span');
-            console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
+            if (element.isDisplayed() == true)
+                newSnippetsCount++;
         })
-        return true;
+        console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
+        if (newSnippetsCount > snippetsCount)
+            return true;
+        else
+            return false;
     }
 
     leftArrowIsShown() {

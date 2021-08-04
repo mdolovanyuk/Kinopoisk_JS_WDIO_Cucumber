@@ -19,3 +19,7 @@ When ('навести курсор на кнопку с билетами', funct
 When ('нажать кнопку запуска видео', function() {
     this.page.clickPlayButton();
 })
+
+When ('прокрутить карусель влево', function() {
+    this.page.touchScroll();
+})

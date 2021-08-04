@@ -1,6 +1,8 @@
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef} = require('../regexp');
 const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
+var snippetsCount = 0;
+
 class TodayInCinemaPage {
 
     get carousel() {return $('.today-in-cinema__carousel')};
@@ -12,6 +14,7 @@ class TodayInCinemaPage {
     get previewCardTitle() {return $('.preview-card-film__title')};
     get ticketButton() {return $('.nameplate__item_type_tickets')};
     get bigTicketButton() {return $('.nameplate__button_type_tickets')};
+
 
     showBlock() {
         this.carousel.scrollIntoView(false);
@@ -49,18 +52,30 @@ class TodayInCinemaPage {
 
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"
 
+    touchScroll() {
+
+    }
+
     clickRightArrow() {
+        this.snippets.forEach(function(element){
+            if (element.$('img').isDisplayed() == true)
+            snippetsCount++;
+        })
+        console.log('!!!!!! snippetsCount = ' + snippetsCount);
         this.arrowRight.click();
     }
 
     newSnippetsAreShown() {
-
-    //TODO - можно через индекс отображаемого элемента
+        var newSnippetsCount = 0;
         this.snippets.forEach(function(element){
-            let tit = element.$('.today-in-cinema-carousel-item__snippet-title').$('span span span');
-        //    console.log("!!!!!!! " + tit.getText() + ' ' + element.$('img').isDisplayed());
+            if (element.isDisplayed() == true)
+                newSnippetsCount++;
         })
-        return true;
+        console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
+        if (newSnippetsCount > snippetsCount)
+            return true;
+        else
+            return false;
     }
 
     leftArrowIsShown() {
@@ -105,8 +120,10 @@ class TodayInCinemaPage {
 
     putMouseOnTicketButton() {
     //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
+        browser.pause(5000);
         this.ticketButton.scrollIntoView(false);
         this.ticketButton.moveTo();
+        browser.pause(5000);
     //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
     }
 
