@@ -63,16 +63,16 @@ getTestItem = function (testItemType, element) {
             testItem = genreAndYear.slice(genreAndYear.indexOf(', ') + 2);
             break;
         case 'year':
-            //genreAndYear = element.$('.film-poster-snippet-partial-component__caption').getText(); //desctop
-            genreAndYear = element.$('.film-poster-snippet__caption_theme_default').getText(); //touch
+            genreAndYear = element.$('.film-poster-snippet-partial-component__caption').getText(); //desctop
+            //genreAndYear = element.$('.film-poster-snippet__caption_theme_default').getText(); //touch
             testItem = genreAndYear.slice(0, genreAndYear.indexOf(', '));
             break;
         case 'ref':
             testItem = element.getProperty('href');
             break;
         case 'rating':
-            //testItem = element.$('.film-rating-bar-partial-component').getText(); // desctop
-            testItem = element.$('.film-rating-bar_scaled').getText();
+            testItem = element.$('.film-rating-bar-partial-component').getText(); // desctop
+            //testItem = element.$('.film-rating-bar_scaled').getText();
             break;
         case 'titleNewTrailers':
             titleStrings = element.$('.w2NvtugQIJ3G0Xs7Su--H').$$('span span span');

@@ -4,14 +4,15 @@ const RedactionChoicePage = require('../pageobjects/redactionChoice.page');
 const NewTrailersPage = require('../pageobjects/newTrailers.page');
 const expect = require('chai').expect;
 
+Given(/^открыт сайт (.*)$/, function(url) {
+    browser.maximizeWindow();
+    browser.url(url);
+    this.mobile = false;
+})
+
 Given(/^на мобильном устройстве открыт сайт (.*)$/, function(url) {
     browser.url(url);
     this.mobile = true;
-})
-
-Given(/^открыт сайт (.*)$/, function(url) {
-    browser.url(url);
-    this.mobile = false;
 })
 
 Given(/^открыт блок "(.*)"$/, function(unit) {
