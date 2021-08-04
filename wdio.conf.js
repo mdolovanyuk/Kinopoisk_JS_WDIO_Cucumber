@@ -73,7 +73,7 @@ exports.config = {
             acceptInsecureCerts: true
         }*/
     ],
-    maximizeWindow: true,
+    //maximizeWindow: true,
     //
     // ===================
     // Test Configurations
@@ -136,7 +136,7 @@ exports.config = {
         require: [
             './step-definition/*.js'
         ],
-        timeout: 300000,
+        timeout: 30000,
         ignoreUndefinedDefinitions: true,
         //backtrace = true
         tagExpression: '@try'
