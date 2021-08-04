@@ -1,7 +1,4 @@
 const {Then} = require('@cucumber/cucumber');
-//const this.page = require('../pageobjects/todayInCinema.page');
-//const RedactionChoicePage = require('../pageobjects/redactionChoice.page');
-//const newTrailersPage = require('../pageobjects/newTrailers.page');
 const expect = require('chai').expect;
 const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef, regForRedChoiceRef} = require('../regexp');
