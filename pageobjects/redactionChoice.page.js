@@ -11,7 +11,7 @@ class RedactionChoicePage {
     get arrowLeft() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_left')};
 
     showBlock() {
-        this.carousel.scrollIntoView(false);
+        this.carousel.scrollIntoView({block : "center"});
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"

@@ -17,7 +17,7 @@ class NewTrailersPage {
    // get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
 
     showBlock() {
-        this.carousel.scrollIntoView(false);
+        this.carousel.scrollIntoView({block : "center"});
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
@@ -85,8 +85,11 @@ class NewTrailersPage {
 
     putMouseOnTitle() {
     //TODO - индекс первого видимого сниппета (вместо 0)
-        this.firstTitle.scrollIntoView(false);
+        //console.log('Координаты: ' + this.firstTitle.getLocation());
+        this.firstTitle.scrollIntoView({block : "center"});
+        //console.log('Координаты: ' + this.firstTitle.getLocation());
         this.firstTitle.moveTo();
+        //console.log('Координаты: ' + this.firstTitle.getLocation());
     }
 
     previewIsShown() {
@@ -103,7 +106,7 @@ class NewTrailersPage {
     titlesAreEqual() {
     //TODO - индекс певого видимого сниппета (вместо 5)
         let fullTitle = getFullTitle(this.firstTitle.$$('span span span'));
-    //    console.log('!!!!!! ' + this.previewCardTitle.getText() + ' = ' + fullTitle);
+        console.log('!!!!!! ' + this.previewCardTitle.getText() + ' = ' + fullTitle);
         if (this.previewCardTitle.getText().includes(fullTitle) == true)
             return true;
         else

@@ -17,7 +17,7 @@ class TodayInCinemaPage {
 
 
     showBlock() {
-        this.carousel.scrollIntoView(false);
+        this.carousel.scrollIntoView({block : "center"});
     }
 
     //МЕТОДЫ СЦЕНАРИЯ "ОТОБРАЖЕНИЕ КАРТОЧЕК"
@@ -92,7 +92,7 @@ class TodayInCinemaPage {
     //МЕТОДЫ СЦЕНАРИЯ "ПОЯВЛЕНИЕ ВСПЛЫВАЮЩЕГО ПРЕВЬЮ"
 
     putMouseOnTitle() {
-        this.firstTitle.scrollIntoView(false);
+        this.firstTitle.scrollIntoView({block : "center"});
         this.firstTitle.moveTo();
     }
 
@@ -121,7 +121,7 @@ class TodayInCinemaPage {
     putMouseOnTicketButton() {
     //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
         browser.pause(5000);
-        this.ticketButton.scrollIntoView(false);
+        this.ticketButton.scrollIntoView({block : "center"});
         this.ticketButton.moveTo();
         browser.pause(5000);
     //    console.log('!!!!! ' + this.bigTicketButton.isDisplayed());
