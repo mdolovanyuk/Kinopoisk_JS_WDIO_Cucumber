@@ -1,6 +1,8 @@
 const {regForRedChoiceRef} = require('../regexp');
 const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
 
+var snippetsCount = 0;
+
 class RedactionChoicePage {
 
     get carousel() {return $('._26U9ddckRECoOhWRhmdv4k')};
@@ -29,17 +31,25 @@ class RedactionChoicePage {
     //МЕТОДЫ СЦЕНАРИЯ "ПРОКРУТКА КАРТОЧЕК"
 
     clickRightArrow() {
+        this.snippets.forEach(function(element){
+            if (element.isDisplayed() == true)
+            snippetsCount++;
+        })
+        console.log('!!!!!! snippetsCount = ' + snippetsCount);
         this.arrowRight.click();
     }
 
     newSnippetsAreShown() {
-
-    //TODO - можно через индекс отображаемого элемента
+        var newSnippetsCount = 0;
         this.snippets.forEach(function(element){
-
-            console.log("!!!!!!! " + element + ' ' + element.$('img').isDisplayed());
+            if (element.isDisplayed() == true)
+                newSnippetsCount++;
         })
-        return true;
+        console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
+        if (newSnippetsCount > snippetsCount)
+            return true;
+        else
+            return false;
     }
 
     leftArrowIsShown() {
