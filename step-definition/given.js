@@ -27,5 +27,6 @@ Given(/^открыт блок "(.*)"$/, function(unit) {
             this.page = NewTrailersPage;
             break;
     }
-    this.page.showBlock();
+    this.unit = unit;
+    this.page.carousel.scrollIntoView({block : "center"});
 })
