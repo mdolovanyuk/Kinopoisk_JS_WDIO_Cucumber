@@ -1,47 +1,65 @@
-checkDisplay = function (testItemType, elements) {
+checkDisplay = function (elements) {
     let displayedItems = [];
-    let testItem;
-    elements.forEach(function(element, index){
-        testItem = getTestItem(testItemType, element);
-        console.log("!!!!!!! " + element + ' - [' + index + '] ' + testItem.isDisplayed());
-        if (getTestItem(testItemType,element).isDisplayed() == true)
+    elements.forEach (function (element, index) {
+        console.log("!!!!!!! " + element + ' - [' + index + '] ' + element.isDisplayed());
+        if (element.isDisplayed() == true)
             displayedItems.push(element);
     })
-    console.log("!!!!!!! " + testItemType + ' ' + displayedItems.length + ' ' + elements.length + '\n');
+    console.log("!!!!!!! " + displayedItems.length + ' ' + elements.length + '\n');
     if (displayedItems.length > 0)
         return true;
     else
         return false;
 }
 
-checkCorrect = function (testItemType, regExp, elements) {
+checkText = function (regExp, elementsText) {
     let correctItems = [];
-    let testItem;
-    elements.forEach(function(element){
-        testItem = getTestItem(testItemType, element);
-         console.log("!!!!!!! " + testItem + ' ' + regExp.test(testItem));
-        if (regExp.test(testItem) == true)
+    elementsText.forEach(function(element){
+        console.log("!!!!!!! " + element + ' ' + regExp.test(element));
+        if (regExp.test(element) == true)
             correctItems.push(element);
     })
-    console.log("!!!!!!! " + testItemType + ' ' + regExp + ' ' + correctItems.length + ' ' + elements.length + '\n');
-    if (correctItems.length == elements.length)
+    console.log("!!!!!!! " + regExp + ' ' + correctItems.length + ' ' + elementsText.length + '\n');
+    if (correctItems.length == elementsText.length)
         return true;
     else
         return false;
 }
 
-
-getFullTitle = function (titleStrings) {
-    let fullTitle = '';
-    titleStrings.forEach(function(str){
-        if(str.getHTML(false).includes('<') == false){
-            fullTitle = fullTitle + str.getText() + ' ';
-        }
+checkAttribute = function (regExp, elements) {
+    let elementsText = [];
+    elements.forEach (function (element) {
+        elementsText.push(element.getText());
     })
-    return fullTitle = fullTitle.trim();
+    return checkText(regExp,elementsText);
 }
 
 
+getFullTitles = function (snippets, titles) {
+    var fullTitles = [];
+    var j = 0;
+    for (var i = 0; i < snippets.length; i++) {
+        fullTitles[i] = '';
+        while (j < titles.length) {
+            if (snippets[i].getHTML().includes(titles[j].getHTML()) == false)
+                break;
+            else {
+                if (titles[j].getHTML(false).includes('<') == true) {
+                    j++;
+                    continue;
+                }
+                else {
+                    fullTitles[i] = fullTitles[i] + titles[j].getText()+ ' ';
+                    j++;
+                }
+            }
+        }
+        fullTitles[i] = fullTitles[i].trim();
+    }
+    return fullTitles;
+}
+
+/*
 getTestItem = function (testItemType, element) {
     let testItem;
     let genreAndYear;
@@ -92,10 +110,11 @@ getTestItem = function (testItemType, element) {
 
     }
     return testItem;
-}
+}*/
 
 module.exports = {
     checkDisplay : checkDisplay,
-    getFullTitle : getFullTitle,
-    checkCorrect : checkCorrect
+    getFullTitles : getFullTitles,
+    checkText : checkText,
+    checkAttribute : checkAttribute
 }

@@ -2,15 +2,15 @@ const {When} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
 
 When ('навести курсор на название фильма', function() {
-    //console.log('Координаты: ' + this.firstTitle.getLocation());
-    //this.page.firstTitle.scrollIntoView({block : "center"});
-    this.page.firstTitle.moveTo();
+    console.log('Координаты: ' + this.page.titles[0].getLocation());
+   // this.page.titles[0].scrollIntoView({block : "center"});
+    this.page.titles[0].moveTo();
 })
 
 When ('нажать в карусели стрелку вправо', function() {
         var i = 0;
-        this.page.snippets.forEach(function(element){
-            if (element.$('img').isDisplayed() == true)
+        this.page.posters.forEach(function(element){
+            if (element.isDisplayed() == true)
                 i++;
         })
         this.snippetsCount = i;
@@ -25,8 +25,4 @@ When ('навести курсор на кнопку с билетами', funct
 
 When ('нажать кнопку запуска видео', function() {
     this.page.playButton.click();
-})
-
-When ('прокрутить карусель влево', function() {
-    //this.page.touchScroll();
 })

@@ -1,8 +1,10 @@
 class RedactionChoicePage {
-    get carousel() {return $('._26U9ddckRECoOhWRhmdv4k')};
+    get carousel() {return $('//h3[text()="Выбор редакции"]/following-sibling::div')};
     get snippets() {return $$('.cinema-review-snippet')};
-    get arrowRight() {return $('[data-tid = "e3b85fc5"].circle-arrow-button_direction_right')};
-    get arrowLeft() {return $('.J47sOuGcNwDHkHCQlPPju.circle-arrow-button_direction_left')};
+    get posters() {return $$('.cinema-review-snippet img')};
+    get refs() {return $$('.cinema-review-snippet')};
+    get arrowRight() {return $('//h3[text()="Выбор редакции"]/following-sibling::div').$('.circle-arrow-button_direction_right')};
+    get arrowLeft() {return $('//h3[text()="Выбор редакции"]/following-sibling::div').$('.circle-arrow-button_direction_left')};
 }
 
 module.exports = new RedactionChoicePage();

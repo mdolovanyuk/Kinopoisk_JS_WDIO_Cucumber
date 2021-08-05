@@ -1,6 +1,11 @@
 class TodayInCinemaPage {
     get carousel() {return $('.today-in-cinema__carousel')};
     get snippets() {return $$('.today-in-cinema-carousel-item__snippet')};
+    get posters() {return $$('.today-in-cinema__carousel img')};
+    get titles() {return $$('.today-in-cinema__carousel .today-in-cinema-carousel-item__snippet-title span span span')};
+    get genresAndYears() {return $$('.today-in-cinema__carousel .film-poster-snippet-partial-component__caption')};
+    get ratings() {return $$('.today-in-cinema__carousel .film-rating-bar-partial-component')};
+    get refs() {return $$('.today-in-cinema-carousel-item__snippet')};
     get arrowRight() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_right')};
     get arrowLeft() {return $('.today-in-cinema__carousel-button.circle-arrow-button_direction_left')};
     get firstTitle() { return $('.today-in-cinema-carousel-item__snippet').$('.today-in-cinema-carousel-item__snippet-title')};

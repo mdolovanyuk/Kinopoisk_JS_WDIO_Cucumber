@@ -1,73 +1,55 @@
 const {Then} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
-const {checkDisplay, checkCorrect, getFullTitle} = require('../commands/commands');
+const {checkDisplay, checkText, checkAttribute, getFullTitles} = require('../commands/commands');
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef, regForRedChoiceRef} = require('../regexp');
 
 Then ('отображаются карточки', function() {
-    expect(checkDisplay('snippet', this.page.snippets)).to.be.true;
+    expect(checkDisplay(this.page.snippets)).to.be.true;
 })
 
 Then ('у карточек есть картинки', function() {
-    expect(checkDisplay('poster', this.page.snippets)).to.be.true;
+    expect(checkDisplay(this.page.posters)).to.be.true;
 })
 
 Then ('есть корректные названия', function() {
-    switch (this.unit) {
-        case 'Смотрите в кино' :
-            expect(checkCorrect('title', regForTitle, this.page.snippets)).to.be.true;
-            break;
-        case 'Новые трейлеры' :
-            expect(checkCorrect('titleNewTrailers', regForTitle, this.page.snippets)).to.be.true;
-            break;
-        default:
-            expect(false, 'Пропущен шаг \'есть корректные названия\'').to.be.true;
-    }
+    let fullTitlesText = getFullTitles(this.page.snippets, this.page.titles);
+    expect(checkText(regForTitle, fullTitlesText)).to.be.true;
 })
 
 Then ('есть корректный жанр', function() {
-     switch (this.unit) {
-        case 'Смотрите в кино' :
-            expect(checkCorrect('genre', regForGenre, this.page.snippets)).to.be.true;
-            break;
-        case 'Новые трейлеры' :
-            expect(checkCorrect('genreNewTrailers', regForGenre, this.page.snippets)).to.be.true;
-            break;
-        default:
-            expect(false, 'Пропущен шаг \'есть корректный жанр\'').to.be.true;
-    }
+    let genresText = [];
+    this.page.genresAndYears.forEach (function (element){
+        genresText.push(element.getText().slice(element.getText().indexOf(', ') + 2));
+    })
+    expect(checkText(regForGenre, genresText)).to.be.true;
 })
 
 Then ('есть корректный год', function() {
-     switch (this.unit) {
-        case 'Смотрите в кино' :
-            expect(checkCorrect('year', regForYear, this.page.snippets)).to.be.true;
-            break;
-        case 'Новые трейлеры' :
-            expect(checkCorrect('yearNewTrailers', regForYear, this.page.snippets)).to.be.true;
-            break;
-        default:
-            expect(false, 'Пропущен шаг \'есть корректный год\'').to.be.true;
-    }
+    let yearsText = [];
+    this.page.genresAndYears.forEach (function (element){
+        yearsText.push(element.getText().slice(0, element.getText().indexOf(', ')));
+    })
+    expect(checkText(regForYear, yearsText)).to.be.true;
 })
 
 Then ('есть корректная ссылка', function() {
+     let refsText = [];
+     this.page.refs.forEach (function (element){
+         refsText.push(element.getProperty('href'));
+     })
      switch (this.unit) {
         case 'Смотрите в кино' :
-            expect(checkCorrect('ref', regForFilmRef, this.page.snippets)).to.be.true;
+        case 'Новые трейлеры' :
+            expect(checkText(regForFilmRef, refsText)).to.be.true;
             break;
         case 'Выбор редакции' :
-            expect(checkCorrect('ref', regForRedChoiceRef, this.page.snippets)).to.be.true;
+            expect(checkText(regForRedChoiceRef, refsText)).to.be.true;
             break;
-        case 'Новые трейлеры' :
-            expect(checkCorrect('refNewTrailers', regForFilmRef, this.page.snippets)).to.be.true;
-            break;
-        default:
-            expect(false, 'Пропущен шаг \'есть корректная ссылка\'').to.be.true;
     }
 })
 
 Then ('есть корректный рейтинг', function() {
-    expect(checkCorrect('rating', regForRating, this.page.snippets)).to.be.true;
+    expect(checkAttribute(regForRating, this.page.ratings)).to.be.true;
 })
 
 Then ('появляется стрелка прокрутки влево', function() {
@@ -81,8 +63,8 @@ Then ('появляется стрелка прокрутки влево', funct
 
 Then ('появляются новые карточки', function() {
     var newSnippetsCount = 0;
-    this.page.snippets.forEach(function(element){
-        if (element.$('img').isDisplayed() == true)
+    this.page.posters.forEach(function(element){
+        if (element.isDisplayed() == true)
             newSnippetsCount++;
     })
     console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
@@ -99,9 +81,9 @@ Then ('слева снизу появляется всплывающее пре�
 })
 
 Then ('название фильма в превью соответствует названию, на которое наведен курсор', function() {
-    let fullTitle = getFullTitle(this.page.firstTitle.$$('span span span'));
-    console.log('!!!!!! ' + this.page.previewCardTitle.getText() + ' *= ' + fullTitle);
-    expect(this.page.previewCardTitle.getText()).to.include(fullTitle);
+    let fullTitleText = getFullTitles([this.page.snippets[0]], this.page.titles);
+    console.log('!!!!!! ' + this.page.previewCardTitle.getText() + ' *= ' + fullTitleText);
+    expect(this.page.previewCardTitle.getText()).to.include(fullTitleText);
 })
 
 Then ('появляется большая кнопка с надписью "Билеты"', function() {
@@ -109,7 +91,7 @@ Then ('появляется большая кнопка с надписью "Б�
 })
 
 Then ('у кнопки есть корректная ссылка', function() {
-    expect(checkCorrect('ref', regForTicketRef, [this.page.bigTicketButton])).to.be.true;
+    expect(checkText(regForTicketRef, [this.page.bigTicketButton.getProperty('href')])).to.be.true;
 })
 
 Then ('откроется виджет с плеером', function() {

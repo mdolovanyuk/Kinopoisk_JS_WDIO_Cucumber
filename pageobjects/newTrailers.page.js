@@ -1,6 +1,10 @@
 class NewTrailersPage {
     get carousel() {return $('.new-trailers__carousel')};
     get snippets() {return $$('[data-tid = "f3f9a9b3"]')};
+    get posters() {return $$('[data-tid="f3f9a9b3"] img')};
+    get titles() {return $$('[data-tid="f3f9a9b3"] span span span')};
+    get genresAndYears() {return $$('//div[@data-tid = "f3f9a9b3"]/div[2]')};
+    get refs() {return $$('[data-tid = "f3f9a9b3"] a')};
     get arrowRight() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_right')};
     get arrowLeft() {return $('.new-trailers__carousel-button.circle-arrow-button_direction_left')};
     get firstTitle() { return $('[data-tid = "f3f9a9b3"]').$('a')};
