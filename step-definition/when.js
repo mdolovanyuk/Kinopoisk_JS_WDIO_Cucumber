@@ -2,8 +2,9 @@ const {When} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
 
 When ('навести курсор на название фильма', function() {
-    console.log('Координаты: ' + this.page.titles[0].getLocation());
+  //  console.log('Координаты: ' + this.page.titles[0].getLocation());
    // this.page.titles[0].scrollIntoView({block : "center"});
+ //   while(let i < this.page.snippets.length)
     this.page.titles[0].moveTo();
 })
 

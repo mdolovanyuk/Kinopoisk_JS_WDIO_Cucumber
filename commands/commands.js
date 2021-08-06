@@ -5,11 +5,8 @@ checkDisplay = function (elements) {
         if (element.isDisplayed() == true)
             displayedItems.push(element);
     })
-    console.log("!!!!!!! " + displayedItems.length + ' ' + elements.length + '\n');
-    if (displayedItems.length > 0)
-        return true;
-    else
-        return false;
+    console.log("!!!!!!! displayedItems.length = " + displayedItems.length + '\n');
+    return displayedItems.length;
 }
 
 checkText = function (regExp, elementsText) {
@@ -20,10 +17,7 @@ checkText = function (regExp, elementsText) {
             correctItems.push(element);
     })
     console.log("!!!!!!! " + regExp + ' ' + correctItems.length + ' ' + elementsText.length + '\n');
-    if (correctItems.length == elementsText.length)
-        return true;
-    else
-        return false;
+    return correctItems.length;
 }
 
 checkAttribute = function (regExp, elements) {

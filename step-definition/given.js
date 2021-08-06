@@ -1,7 +1,10 @@
 const {Given} = require('@cucumber/cucumber');
-const TodayInCinemaPage = require('../pageobjects/todayInCinema.page');
-const RedactionChoicePage = require('../pageobjects/redactionChoice.page');
-const NewTrailersPage = require('../pageobjects/newTrailers.page');
+const TodayInCinemaPage = require('../pageobjects/desctop/todayInCinema.page');
+const RedactionChoicePage = require('../pageobjects/desctop/redactionChoice.page');
+const NewTrailersPage = require('../pageobjects/desctop/newTrailers.page');
+const TodayInCinemaTouchPage = require('../pageobjects/touch/todayInCinema.page');
+const RedactionChoiceTouchPage = require('../pageobjects/touch/redactionChoice.page');
+const NewTrailersTouchPage = require('../pageobjects/touch/newTrailers.page');
 const expect = require('chai').expect;
 
 Given(/^открыт сайт (.*)$/, function(url) {
@@ -29,4 +32,6 @@ Given(/^открыт блок "(.*)"$/, function(unit) {
     }
     this.unit = unit;
     this.page.carousel.scrollIntoView({block : "center"});
+
+   // browser.pause(900000);
 })
