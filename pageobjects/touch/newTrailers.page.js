@@ -10,8 +10,20 @@ class NewTrailersPage {
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
     get previewCardTitle() {return $('.preview-card-film__title')};
     get playButton() { return $('//span[@data-tid = "182e6b7c"]/..')};
-    get player() { return $('iframe.discovery-trailers-iframe')}; // desctop
-   // get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
+    get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
+    get closeBlockWindowBtn() { return $('div.eJXgiU')}; // touch
+    get sectionTitle() { return $('//h3[text() = "Новые трейлеры"]')}; // touch
 }
+/*
+closeBlockWindow = function() {
+    if (this.closeBlockWindowBtn.isExisting())
+        this.closeBlockWindowBtn.click();
+}
+
+snippetsSwipe = function() {
+    this.carousel.focus();
+    browser.keys("ArrowRight");
+}
+*/
 
 module.exports = new NewTrailersPage();

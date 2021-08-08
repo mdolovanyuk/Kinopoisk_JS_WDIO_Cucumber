@@ -1,13 +1,19 @@
 const {Then} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
-const {checkDisplay, checkText, checkAttribute, getFullTitles} = require('../commands/commands');
+const {checkDisplay, checkText, checkAttribute, getFullTitles, snippetsSwipe} = require('../commands/commands');
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef, regForRedChoiceRef} = require('../regexp');
 
 Then ('отображаются карточки', function() {
-    while (this.page.arrowRight.isDisplayed()) {
-        this.page.arrowRight.click();
-        browser.pause(1000);
-    }
+  //  if (this.mode == 'desctop') {
+        while (this.page.arrowRight.isDisplayed()) {
+            this.page.arrowRight.click();
+            browser.pause(1000);
+        }
+  //  }
+  //  if (this.mode == 'touch') {
+  //      snippetsSwipe(this.page.sectionTitle, this.page.posters, this.page.snippets);
+  //  }
+
     expect(checkDisplay(this.page.snippets)).to.be.equal(this.page.snippets.length);
 })
 

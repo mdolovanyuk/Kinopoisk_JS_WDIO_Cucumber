@@ -11,7 +11,6 @@ class NewTrailersPage {
     get previewCardTitle() {return $('.preview-card-film__title')};
     get playButton() { return $('//span[@data-tid = "182e6b7c"]/..')};
     get player() { return $('iframe.discovery-trailers-iframe')}; // desctop
-   // get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
 }
 
 module.exports = new NewTrailersPage();

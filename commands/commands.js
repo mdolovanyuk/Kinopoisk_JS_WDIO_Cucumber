@@ -53,6 +53,23 @@ getFullTitles = function (snippets, titles) {
     return fullTitles;
 }
 
+snippetsSwipe = function (sectionTitle, posters, snippets) {
+    sectionTitle.click();
+    browser.keys("Tab");
+    while(1){
+        out = 0;
+        browser.keys("ArrowRight");
+        if (posters[snippets.length-1].isDisplayed()) {
+            out = 1;
+            for(let j=0; j<10; j++)
+                browser.keys("ArrowRight");
+            browser.pause(1000);
+        }
+        if ((out == 1) && (posters[snippets.length-1].isDisplayed()))
+            break;
+    }
+}
+
 /*
 getTestItem = function (testItemType, element) {
     let testItem;
@@ -110,5 +127,6 @@ module.exports = {
     checkDisplay : checkDisplay,
     getFullTitles : getFullTitles,
     checkText : checkText,
-    checkAttribute : checkAttribute
+    checkAttribute : checkAttribute,
+    snippetsSwipe : snippetsSwipe
 }
