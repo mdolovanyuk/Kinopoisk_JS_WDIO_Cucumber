@@ -53,6 +53,16 @@ getFullTitles = function (snippets, titles) {
     return fullTitles;
 }
 
+waitElement = function(element){
+    try {
+            element.waitForDisplayed();
+        }
+        catch (error) {
+            return error;
+        }
+}
+
+
 /*
 getTestItem = function (testItemType, element) {
     let testItem;
@@ -110,5 +120,6 @@ module.exports = {
     checkDisplay : checkDisplay,
     getFullTitles : getFullTitles,
     checkText : checkText,
-    checkAttribute : checkAttribute
+    checkAttribute : checkAttribute,
+    waitElement : waitElement
 }

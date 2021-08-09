@@ -1,17 +1,16 @@
 const {When} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
+const {waitElement} = require('../commands/commands');
 
 When ('навести курсор на название фильма', function() {
-  //  console.log('Координаты: ' + this.page.titles[0].getLocation());
-   // this.page.titles[0].scrollIntoView({block : "center"});
- //   while(let i < this.page.snippets.length)
+    waitElement(this.page.titles[0]);
     this.page.titles[0].moveTo();
 })
 
 When ('нажать в карусели стрелку вправо', function() {
         var i = 0;
         this.page.posters.forEach(function(element){
-            if (element.isDisplayed() == true)
+            if (element.isDisplayedInViewport() == true)
                 i++;
         })
         this.snippetsCount = i;

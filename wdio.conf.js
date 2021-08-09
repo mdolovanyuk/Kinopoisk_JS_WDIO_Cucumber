@@ -46,7 +46,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -57,7 +57,7 @@ exports.config = {
             maxInstances: 1,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-            'goog:chromeOptions': {
+        /*    'goog:chromeOptions': {
                 mobileEmulation: {'deviceName': 'Nexus 5'},
                 args: [ //'--no-sandbox',
                         //'--disable-gpu',
@@ -65,13 +65,13 @@ exports.config = {
                         //'--disable-notifications',
                         '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/12.0 Mobile/15A372 Safari/604.1'
                        ]
-            }
+            }*/
         },
-      /*  {
-            maxInstances: 5,
+        {
+            maxInstances: 1,
             browserName: 'firefox',
             acceptInsecureCerts: true
-        }*/
+        }
     ],
     //maximizeWindow: true,
     //
@@ -137,11 +137,13 @@ exports.config = {
             './step-definition/*.js'
         ],
        // timeout: 900000,
-       timeout: 30000,
+        timeout: 30000,
         ignoreUndefinedDefinitions: true,
         //backtrace = true
-     //   tagExpression: '@try and @touch'
-        tagExpression: '@try and @touch'
+      //  tagExpression: '@try and @touch',
+        tagExpression: '@try and @desctop',
+        retry: 1,
+        retryTagFilter: /@retry/
     },
 
     //

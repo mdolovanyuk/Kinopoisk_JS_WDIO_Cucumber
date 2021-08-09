@@ -6,32 +6,55 @@ const TodayInCinemaTouchPage = require('../pageobjects/touch/todayInCinema.page'
 const RedactionChoiceTouchPage = require('../pageobjects/touch/redactionChoice.page');
 const NewTrailersTouchPage = require('../pageobjects/touch/newTrailers.page');
 const expect = require('chai').expect;
+const {waitElement} = require('../commands/commands');
 
 Given(/^открыт сайт (.*)$/, function(url) {
     browser.maximizeWindow();
     browser.url(url);
-    this.mobile = false;
+    this.mode = 'desctop';
 })
 
 Given(/^на мобильном устройстве открыт сайт (.*)$/, function(url) {
+    browser.maximizeWindow();
     browser.url(url);
-    this.mobile = true;
+    this.mode = 'touch';
+
 })
 
 Given(/^открыт блок "(.*)"$/, function(unit) {
-    switch (unit) {
-        case 'Смотрите в кино' :
-            this.page = TodayInCinemaPage;
-            break;
-        case 'Выбор редакции' :
-            this.page = RedactionChoicePage;
-            break;
-        case 'Новые трейлеры' :
-            this.page = NewTrailersPage;
-            break;
+    if(this.mode == 'desctop') {
+        switch (unit) {
+            case 'Смотрите в кино' :
+                this.page = TodayInCinemaPage;
+                break;
+            case 'Выбор редакции' :
+                this.page = RedactionChoicePage;
+                break;
+            case 'Новые трейлеры' :
+                this.page = NewTrailersPage;
+                break;
+        }
+    }
+    if(this.mode == 'touch') {
+        switch (unit) {
+            case 'Смотрите в кино' :
+                this.page = TodayInCinemaTouchPage;
+                break;
+            case 'Выбор редакции' :
+                this.page = RedactionChoiceTouchPage;
+                break;
+            case 'Новые трейлеры' :
+                this.page = NewTrailersTouchPage;
+                break;
+        }
+        try{
+            this.page.closeBlockingWindowBtn.waitForDisplayed();
+            this.page.closeBlockingWindowBtn.click();
+        }
+        catch(e){};
     }
     this.unit = unit;
     this.page.carousel.scrollIntoView({block : "center"});
 
-   // browser.pause(900000);
+ //  browser.pause(300000);
 })

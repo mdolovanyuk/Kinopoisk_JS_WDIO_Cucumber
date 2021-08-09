@@ -1,4 +1,5 @@
 class NewTrailersPage {
+    get blockTitle() {return $('//h3[text()="Новые трейлеры"]')}; // touch
     get carousel() {return $('.new-trailers__carousel')};
     get snippets() {return $$('[data-tid = "f3f9a9b3"]')};
     get posters() {return $$('[data-tid="f3f9a9b3"] img')};
@@ -10,8 +11,8 @@ class NewTrailersPage {
     get previewCard() {return $('div[data-tid = "f0448ef1"]')};
     get previewCardTitle() {return $('.preview-card-film__title')};
     get playButton() { return $('//span[@data-tid = "182e6b7c"]/..')};
-    get player() { return $('iframe.discovery-trailers-iframe')}; // desctop
-   // get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
+    get player() { return $('iframe[data-tid = "bc52a00f"]')}; // touch
+    get closeBlockingWindowBtn() { return $('.eJXgiU')}; //touch
 }
 
 module.exports = new NewTrailersPage();

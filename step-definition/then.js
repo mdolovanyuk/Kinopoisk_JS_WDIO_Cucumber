@@ -1,12 +1,27 @@
 const {Then} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
-const {checkDisplay, checkText, checkAttribute, getFullTitles} = require('../commands/commands');
+const {checkDisplay, checkText, checkAttribute, getFullTitles, waitElement} = require('../commands/commands');
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef, regForRedChoiceRef} = require('../regexp');
 
 Then ('отображаются карточки', function() {
-    while (this.page.arrowRight.isDisplayed()) {
-        this.page.arrowRight.click();
-        browser.pause(1000);
+    if (this.mode == 'desctop') {
+        while (this.page.arrowRight.isDisplayed()) {
+            this.page.arrowRight.click();
+            browser.pause(1000);
+        }
+    }
+    if (this.mode == 'touch') {
+        this.page.blockTitle.click();
+        browser.keys("Tab");
+        browser.keys("Tab");
+        while (1) {
+            browser.keys("ArrowRight");
+            if(this.page.posters[this.page.snippets.length-1].isDisplayedInViewport()) {
+                browser.pause(1000);
+                if(this.page.posters[this.page.snippets.length-1].isDisplayedInViewport)
+                    break;
+            }
+        }
     }
     expect(checkDisplay(this.page.snippets)).to.be.equal(this.page.snippets.length);
 })
@@ -57,18 +72,14 @@ Then ('есть корректный рейтинг', function() {
 })
 
 Then ('появляется стрелка прокрутки влево', function() {
-    try {
-        this.page.arrowLeft.waitForDisplayed();
-    }
-    catch (e) {
-        expect(e).to.be.null;
-    }
+    expect(waitElement(this.page.arrowLeft), "Ошибка ожидания загрузки").to.be.undefined;
 })
 
 Then ('появляются новые карточки', function() {
     var newSnippetsCount = 0;
+    browser.pause(1000);
     this.page.posters.forEach(function(element){
-        if (element.isDisplayed() == true)
+        if (element.isDisplayedInViewport() == true)
             newSnippetsCount++;
     })
     console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
@@ -76,22 +87,19 @@ Then ('появляются новые карточки', function() {
 })
 
 Then ('слева снизу появляется всплывающее превью', function() {
-        try {
-            this.page.previewCard.waitForDisplayed();
-        }
-        catch (e) {
-            expect(e).to.be.null;
-        }
+    expect(waitElement(this.page.previewCard), "Ошибка ожидания загрузки").to.be.undefined;
 })
 
 Then ('название фильма в превью соответствует названию, на которое наведен курсор', function() {
     let fullTitleText = getFullTitles([this.page.snippets[0]], this.page.titles);
     console.log('!!!!!! ' + this.page.previewCardTitle.getText() + ' *= ' + fullTitleText);
+    expect(fullTitleText).is.not.equal('');
     expect(this.page.previewCardTitle.getText()).to.include(fullTitleText);
 })
 
 Then ('появляется большая кнопка с надписью "Билеты"', function() {
-    expect(this.page.bigTicketButton.isDisplayed()).to.be.true;
+    //expect(this.page.bigTicketButton.isDisplayed()).to.be.true;
+    expect(waitElement(this.page.bigTicketButton), "Ошибка ожидания загрузки").to.be.undefined;
 })
 
 Then ('у кнопки есть корректная ссылка', function() {
@@ -99,10 +107,5 @@ Then ('у кнопки есть корректная ссылка', function() {
 })
 
 Then ('откроется виджет с плеером', function() {
-    try {
-        this.page.player.waitForDisplayed();
-    }
-    catch (e) {
-        expect(e).to.be.null;
-    }
+    expect(waitElement(this.page.player), "Ошибка ожидания загрузки").to.be.undefined;
 })
