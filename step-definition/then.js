@@ -15,10 +15,14 @@ Then ('отображаются карточки', function() {
         browser.keys("Tab");
         browser.keys("Tab");
         while (1) {
+            let startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
             browser.keys("ArrowRight");
-            if(this.page.posters[this.page.snippets.length-1].isDisplayedInViewport()) {
+            let finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            if (startX == finishX) {
                 browser.pause(1000);
-                if(this.page.posters[this.page.snippets.length-1].isDisplayedInViewport)
+                browser.keys("ArrowRight");
+                finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+                if (startX ==finishX)
                     break;
             }
         }
@@ -72,7 +76,7 @@ Then ('есть корректный рейтинг', function() {
 })
 
 Then ('появляется стрелка прокрутки влево', function() {
-    expect(waitElement(this.page.arrowLeft), "Ошибка ожидания загрузки").to.be.undefined;
+    expect(waitElement(this.page.arrowLeft), "Ошибка ожидания загрузки").to.be.equal(1);
 })
 
 Then ('появляются новые карточки', function() {
@@ -87,25 +91,33 @@ Then ('появляются новые карточки', function() {
 })
 
 Then ('слева снизу появляется всплывающее превью', function() {
-    expect(waitElement(this.page.previewCard), "Ошибка ожидания загрузки").to.be.undefined;
+    expect(this.previewCards.length).to.be.equal(this.page.snippets.length);
 })
 
 Then ('название фильма в превью соответствует названию, на которое наведен курсор', function() {
-    let fullTitleText = getFullTitles([this.page.snippets[0]], this.page.titles);
-    console.log('!!!!!! ' + this.page.previewCardTitle.getText() + ' *= ' + fullTitleText);
-    expect(fullTitleText).is.not.equal('');
-    expect(this.page.previewCardTitle.getText()).to.include(fullTitleText);
+    let fullTitleText = getFullTitles(this.page.snippets, this.page.titles);
+    let equalTitlesCount = 0;
+    for(let i=0; i<this.page.snippets.length; i++) {
+        console.log('!!!!!! ' + this.previewCardsTitle[i] + ' *= ' + fullTitleText[i]);
+        if(fullTitleText[i] != '' && this.previewCardsTitle[i].includes(fullTitleText[i]))
+            equalTitlesCount++;
+    }
+    expect(equalTitlesCount).to.equal(this.page.snippets.length);
 })
 
 Then ('появляется большая кнопка с надписью "Билеты"', function() {
     //expect(this.page.bigTicketButton.isDisplayed()).to.be.true;
-    expect(waitElement(this.page.bigTicketButton), "Ошибка ожидания загрузки").to.be.undefined;
+    expect(this.bigTicketButtonsCount).to.be.equal(this.page.snippets.length);
 })
 
 Then ('у кнопки есть корректная ссылка', function() {
-    expect(checkText(regForTicketRef, [this.page.bigTicketButton.getProperty('href')])).to.be.equal(1);
+    let refsText = [];
+    this.page.bigTicketButtons.forEach (function (element){
+        refsText.push(element.getProperty('href'));
+    })
+    expect(checkText(regForTicketRef, refsText)).to.be.equal(this.page.snippets.length);
 })
 
 Then ('откроется виджет с плеером', function() {
-    expect(waitElement(this.page.player), "Ошибка ожидания загрузки").to.be.undefined;
+    expect(this.playerCount).to.be.equal(this.page.snippets.length);
 })

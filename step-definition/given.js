@@ -47,11 +47,12 @@ Given(/^открыт блок "(.*)"$/, function(unit) {
                 this.page = NewTrailersTouchPage;
                 break;
         }
-        try{
+       //Если вылетает блок.окно про приложение Кинопоиск
+       /* try{
             this.page.closeBlockingWindowBtn.waitForDisplayed();
             this.page.closeBlockingWindowBtn.click();
         }
-        catch(e){};
+        catch(e){}; */
     }
     this.unit = unit;
     this.page.carousel.scrollIntoView({block : "center"});

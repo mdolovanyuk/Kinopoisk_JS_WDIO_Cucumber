@@ -35,8 +35,13 @@ getFullTitles = function (snippets, titles) {
     for (var i = 0; i < snippets.length; i++) {
         fullTitles[i] = '';
         while (j < titles.length) {
-            if (snippets[i].getHTML().includes(titles[j].getHTML()) == false)
+            if (snippets[i].getHTML().includes(titles[j].getHTML()) == false) {
+                if (fullTitles[i] == '') {
+                    j++;
+                    continue;
+                }
                 break;
+            }
             else {
                 if (titles[j].getHTML(false).includes('<') == true) {
                     j++;
@@ -56,9 +61,10 @@ getFullTitles = function (snippets, titles) {
 waitElement = function(element){
     try {
             element.waitForDisplayed();
+            return 1;
         }
         catch (error) {
-            return error;
+            return 0;
         }
 }
 

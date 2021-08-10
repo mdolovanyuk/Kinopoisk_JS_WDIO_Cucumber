@@ -57,7 +57,7 @@ exports.config = {
             maxInstances: 1,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-        /*    'goog:chromeOptions': {
+         /*   'goog:chromeOptions': {
                 mobileEmulation: {'deviceName': 'Nexus 5'},
                 args: [ //'--no-sandbox',
                         //'--disable-gpu',
@@ -67,11 +67,11 @@ exports.config = {
                        ]
             }*/
         },
-        {
+      /*  {
             maxInstances: 1,
             browserName: 'firefox',
             acceptInsecureCerts: true
-        }
+        } */
     ],
     //maximizeWindow: true,
     //
@@ -140,10 +140,10 @@ exports.config = {
         timeout: 30000,
         ignoreUndefinedDefinitions: true,
         //backtrace = true
-      //  tagExpression: '@try and @touch',
+     //   tagExpression: '@try and @touch',
         tagExpression: '@try and @desctop',
-        retry: 1,
-        retryTagFilter: /@retry/
+ //       retry: 1,
+ //       retryTagFilter: /@retry/
     },
 
     //
