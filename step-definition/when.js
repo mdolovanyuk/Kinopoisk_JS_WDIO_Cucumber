@@ -38,6 +38,9 @@ When ('нажать в карусели стрелку вправо', function()
 When ('навести курсор на кнопку с билетами', function() {
     this.bigTicketButtonsCount = 0;
     for(let i=0; i<this.page.ticketButtons.length; i++) {
+    //    console.log('this.page.ticketButtons.length'+this.page.ticketButtons.length);
+    //    console.log(i);
+        console.log('в цикле');
         this.page.ticketButtons[i].moveTo();
         if (this.page.ticketButtons[i].getLocation('x') >= this.page.carousel.getLocation('x') + this.page.carousel.getSize('width')) {
             this.page.arrowRight.click();
@@ -46,7 +49,9 @@ When ('навести курсор на кнопку с билетами', funct
         }
         if(waitElement(this.page.bigTicketButtons[i]) == 1) {
             this.bigTicketButtonsCount++;
+            console.log('Плюсуем!');
         }
+        else console.log('Беда!');
     }
 })
 

@@ -21,5 +21,8 @@
     "geckodriver": "^2.0.1",
     "wdio-chromedriver-service": "^7.2.0",
     "wdio-geckodriver-service": "^2.0.2"
+  },
+  "dependencies": {
+    "minimist": "^1.2.5"
   }
 }

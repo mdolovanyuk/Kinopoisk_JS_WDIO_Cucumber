@@ -15,13 +15,30 @@ Then ('отображаются карточки', function() {
         browser.keys("Tab");
         browser.keys("Tab");
         while (1) {
-            let startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            let startX;
+            let finishX;
+            try{
+                startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            } catch {
+                browser.pause(1000);
+                startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            }
             browser.keys("ArrowRight");
-            let finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            try{
+                finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            } catch {
+                browser.pause(1000);
+                finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+            }
             if (startX == finishX) {
                 browser.pause(1000);
                 browser.keys("ArrowRight");
-                finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+                try {
+                    finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+                } catch {
+                    browser.pause(1000);
+                    finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
+                }
                 if (startX ==finishX)
                     break;
             }
