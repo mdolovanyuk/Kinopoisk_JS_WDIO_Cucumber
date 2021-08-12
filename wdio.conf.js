@@ -6,7 +6,7 @@ let args = require('minimist')(process.argv.slice(4), {
 });
 
 let featureType = args.featureType.toLowerCase();
-let tagExpression = '@try and @' + featureType;
+let tagExpression = '@' + featureType;
 
 let browsers = args.browser.toLowerCase().split(',');
 let capabilities = [];

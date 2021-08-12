@@ -1,6 +1,6 @@
 const {When} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
-const {waitElement} = require('../commands/commands');
+const {waitElement, littleWait, log} = require('../commands/commands');
 
 When ('навести курсор на название фильма', function() {
     this.previewCards = [];
@@ -9,7 +9,7 @@ When ('навести курсор на название фильма', function
         this.page.wholeTitles[i].moveTo();
         if (this.page.wholeTitles[i].getLocation('x') >= this.page.carousel.getLocation('x') + this.page.carousel.getSize('width')) {
             this.page.arrowRight.click();
-            browser.pause(1000);
+            littleWait();
             this.page.wholeTitles[i].moveTo();
             waitElement(this.page.previewCard);
         }
@@ -18,9 +18,13 @@ When ('навести курсор на название фильма', function
                 waitElement(this.page.previewCard);
         }
         this.previewCards.push(this.page.previewCard);
-        this.previewCardsTitle.push(this.page.previewCardTitle.getText());
+        try {
+            this.previewCardsTitle.push(this.page.previewCardTitle.getText());
+        } catch {
+            this.page.wholeTitles[i].moveTo();
+            this.previewCardsTitle.push(this.page.previewCardTitle.getText());
+        }
         this.page.blockTitle.moveTo();
-//        browser.pause(1000);
     }
 })
 
@@ -31,27 +35,24 @@ When ('нажать в карусели стрелку вправо', function()
                 i++;
         })
         this.snippetsCount = i;
-        console.log('!!!!!! snippetsCount = ' + this.snippetsCount);
+        log('!!!!!! snippetsCount = ' + this.snippetsCount);
         this.page.arrowRight.click();
 })
 
 When ('навести курсор на кнопку с билетами', function() {
+    if (this.page.ticketButtons.length != this.page.snippets.length)
+        console.log ("Не у всех карточек есть кнопки");
     this.bigTicketButtonsCount = 0;
     for(let i=0; i<this.page.ticketButtons.length; i++) {
-    //    console.log('this.page.ticketButtons.length'+this.page.ticketButtons.length);
-    //    console.log(i);
-        console.log('в цикле');
         this.page.ticketButtons[i].moveTo();
         if (this.page.ticketButtons[i].getLocation('x') >= this.page.carousel.getLocation('x') + this.page.carousel.getSize('width')) {
             this.page.arrowRight.click();
-            browser.pause(1000);
+            littleWait();
             this.page.ticketButtons[i].moveTo();
         }
         if(waitElement(this.page.bigTicketButtons[i]) == 1) {
             this.bigTicketButtonsCount++;
-            console.log('Плюсуем!');
         }
-        else console.log('Беда!');
     }
 })
 
@@ -61,7 +62,7 @@ When ('нажать кнопку запуска видео', function() {
         this.page.playButtons[i].waitForDisplayed();
         if (this.page.playButtons[i].getLocation('x') >= this.page.carousel.getLocation('x') + this.page.carousel.getSize('width')) {
             this.page.arrowRight.click();
-            browser.pause(1000);
+            littleWait();
             this.page.playButtons[i].waitForDisplayed();
         }
         this.page.playButtons[i].click();

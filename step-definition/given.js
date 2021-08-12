@@ -6,7 +6,7 @@ const TodayInCinemaTouchPage = require('../pageobjects/touch/todayInCinema.page'
 const RedactionChoiceTouchPage = require('../pageobjects/touch/redactionChoice.page');
 const NewTrailersTouchPage = require('../pageobjects/touch/newTrailers.page');
 const expect = require('chai').expect;
-const {waitElement} = require('../commands/commands');
+const {waitElement, littleWait} = require('../commands/commands');
 
 Given(/^открыт сайт (.*)$/, function(url) {
     browser.maximizeWindow();

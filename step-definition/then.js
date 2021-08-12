@@ -1,13 +1,13 @@
 const {Then} = require('@cucumber/cucumber');
 const expect = require('chai').expect;
-const {checkDisplay, checkText, checkAttribute, getFullTitles, waitElement} = require('../commands/commands');
+const {checkDisplay, checkText, checkAttribute, getFullTitles, waitElement, littleWait, log} = require('../commands/commands');
 const {regForTitle, regForGenre, regForYear, regForFilmRef, regForRating, regForTicketRef, regForRedChoiceRef} = require('../regexp');
 
 Then ('отображаются карточки', function() {
     if (this.mode == 'desctop') {
         while (this.page.arrowRight.isDisplayed()) {
             this.page.arrowRight.click();
-            browser.pause(1000);
+            littleWait();
         }
     }
     if (this.mode == 'touch') {
@@ -20,23 +20,23 @@ Then ('отображаются карточки', function() {
             try{
                 startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
             } catch {
-                browser.pause(1000);
+                littleWait();
                 startX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
             }
             browser.keys("ArrowRight");
             try{
                 finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
             } catch {
-                browser.pause(1000);
+                littleWait();
                 finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
             }
             if (startX == finishX) {
-                browser.pause(1000);
+                littleWait();
                 browser.keys("ArrowRight");
                 try {
                     finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
                 } catch {
-                    browser.pause(1000);
+                    littleWait();
                     finishX = this.page.snippets[this.page.snippets.length-1].getLocation('x');
                 }
                 if (startX ==finishX)
@@ -98,12 +98,12 @@ Then ('появляется стрелка прокрутки влево', funct
 
 Then ('появляются новые карточки', function() {
     var newSnippetsCount = 0;
-    browser.pause(1000);
+    littleWait();
     this.page.posters.forEach(function(element){
         if (element.isDisplayedInViewport() == true)
             newSnippetsCount++;
     })
-    console.log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
+    log('!!!!!! newSnippetsCount = ' + newSnippetsCount);
     expect(newSnippetsCount > this.snippetsCount).to.be.true;
 })
 
@@ -115,7 +115,7 @@ Then ('название фильма в превью соответствует 
     let fullTitleText = getFullTitles(this.page.snippets, this.page.titles);
     let equalTitlesCount = 0;
     for(let i=0; i<this.page.snippets.length; i++) {
-        console.log('!!!!!! ' + this.previewCardsTitle[i] + ' *= ' + fullTitleText[i]);
+        log('!!!!!! ' + this.previewCardsTitle[i] + ' *= ' + fullTitleText[i]);
         if(fullTitleText[i] != '' && this.previewCardsTitle[i].includes(fullTitleText[i]))
             equalTitlesCount++;
     }

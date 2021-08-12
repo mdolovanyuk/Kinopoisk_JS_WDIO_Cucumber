@@ -1,22 +1,22 @@
 checkDisplay = function (elements) {
     let displayedItems = [];
     elements.forEach (function (element, index) {
-        console.log("!!!!!!! " + element + ' - [' + index + '] ' + element.isDisplayed());
+        log("!!!!!!! " + element + ' - [' + index + '] ' + element.isDisplayed());
         if (element.isDisplayed() == true)
             displayedItems.push(element);
     })
-    console.log("!!!!!!! displayedItems.length = " + displayedItems.length + '\n');
+    log("!!!!!!! displayedItems.length = " + displayedItems.length + '\n');
     return displayedItems.length;
 }
 
 checkText = function (regExp, elementsText) {
     let correctItems = [];
     elementsText.forEach(function(element){
-        console.log("!!!!!!! " + element + ' ' + regExp.test(element));
+        log("!!!!!!! " + element + ' ' + regExp.test(element));
         if (regExp.test(element) == true)
             correctItems.push(element);
     })
-    console.log("!!!!!!! " + regExp + ' ' + correctItems.length + ' ' + elementsText.length + '\n');
+    log("!!!!!!! " + regExp + ' ' + correctItems.length + ' ' + elementsText.length + '\n');
     return correctItems.length;
 }
 
@@ -68,10 +68,20 @@ waitElement = function(element){
         }
 }
 
+littleWait = function() {
+    browser.pause(1000);
+}
+
+log = function(str) {
+//    console.log(str);
+}
+
 module.exports = {
     checkDisplay : checkDisplay,
     getFullTitles : getFullTitles,
     checkText : checkText,
     checkAttribute : checkAttribute,
-    waitElement : waitElement
+    waitElement : waitElement,
+    littleWait : littleWait,
+    log : log
 }
